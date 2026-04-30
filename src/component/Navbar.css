@@ -1,0 +1,206 @@
+/* --- 1. Global & Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- 2. Navigation Structure --- */
+.nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2000;
+  padding: 20px 0;
+  color: #e5e7eb;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav.active {
+  padding: 12px 0;
+  /* Aapka original background aur blur */
+  background: rgba(15, 15, 26, 0.85);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --- 3. Logo --- */
+.logo { display: flex; align-items: center; gap: 10px; }
+.logo img { width: 50px; height: 50px; object-fit: contain; }
+.logo h1 {
+  text-transform: uppercase; font-size: 1.4rem; letter-spacing: 2px;
+  /* Aapka original gradient */
+  background: linear-gradient(to right, white, rgb(80, 70, 150));
+  -webkit-background-clip: text; 
+  -webkit-text-fill-color: transparent;
+}
+
+/* --- 4. Desktop Menu --- */
+.desktop-menu { display: flex; gap: 30px; list-style: none; }
+.desktop-menu li a {
+  text-decoration: none; color: #e5e7eb; font-size: 0.85rem;
+  text-transform: uppercase; font-weight: 500; letter-spacing: 1px;
+  position: relative; transition: 0.3s;
+}
+
+.desktop-menu li a:hover{
+  /* Aapka original hover gradient */
+  background: linear-gradient(to right, white, #504696);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.desktop-menu li a::after {
+  content: ''; width: 100%; height: 2px; bottom: -5px; left: 0;
+  position: absolute; background: white; transform: scaleX(0);
+  transition: 0.3s transform ease; transform-origin: right;
+}
+.desktop-menu li a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+/* Desktop Button */
+.get button {
+  padding: 10px 24px; border-radius: 6px; color: white;
+  border: 1px solid rgba(255,255,255,0.3); background: transparent;
+  cursor: pointer; transition: 0.4s; font-weight: 600;
+}
+.get button:hover {
+  /* Aapka original button hover */
+  background: linear-gradient(to left, #131313, #271d52);
+  box-shadow: 0 0 20px #2d2d83; 
+  border-color: transparent;
+}
+
+/* --- 5. Mobile & Responsive Logic --- */
+
+.hamburger {
+  display: none; width: 28px; height: 18px;
+  position: relative; cursor: pointer; z-index: 3000;
+}
+.hamburger span {
+  display: block; width: 100%; height: 2px; background: #fff;
+  position: absolute; transition: 0.4s;
+}
+.hamburger span:nth-child(1) { top: 0; }
+.hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.hamburger span:nth-child(3) { bottom: 0; }
+
+.hamburger.open span:nth-child(1) { transform: rotate(45deg); top: 8px; }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg); bottom: 8px; }
+
+.mobile-menu-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+  /* Aapka original mobile gradient */
+  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a40 100%);
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  z-index: 2500;
+  overflow: hidden;
+}
+
+.mobile-links {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 20px; list-style: none; width: 100%;
+}
+
+.mobile-links a {
+  position: relative;
+  font-size: 1.6rem;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: inline-block;
+  padding: 10px 0;
+  transition: 0.3s;
+}
+
+.mobile-links a:hover {
+  background: linear-gradient(to right, white, #504696);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+/* --- Mobile Links with Underline Animation --- */
+.mobile-links a {
+  position: relative;
+  font-size: 1.6rem;
+  color: #e5e7eb;
+  text-decoration: none;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: inline-block;
+  padding: 10px 0;
+  transition: 0.3s;
+}
+
+/* Mobile After Effect (Underline) */
+.mobile-links a::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background: white; /* Aapka original color */
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover par underline show hogi */
+.mobile-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.mobile-get-btn {
+  margin-top: 30px;
+  padding: 12px 35px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  background: transparent;
+  transition: 0.4s;
+}
+
+.mobile-get-btn:hover {
+  background: linear-gradient(to left, #131313, #271d52);
+  box-shadow: 0 0 25px rgba(45, 33, 131, 0.6);
+  transform: translateY(-3px);
+}
+
+/* --- 6. Breakpoints --- */
+
+@media (max-width: 768px) {
+  .desktop-menu, .get.desktop-only { display: none; }
+  .hamburger { display: flex; }
+  .nav-container { padding: 0 5%; }
+  .logo h1 { font-size: 1.1rem; }
+  .mobile-links { gap: 10px; }
+  .mobile-links a {
+    font-size: 1.4rem; 
+    letter-spacing: 1px;
+  }
+  
+  .mobile-links a::after {
+    height: 1.5px; 
+  }  
+}

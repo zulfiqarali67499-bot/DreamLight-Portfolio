@@ -1,0 +1,80 @@
+.shine-loader {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100000;
+  overflow: hidden;
+}
+
+.text-wrapper {
+  text-align: center;
+  position: relative;
+  z-index: 5;
+}
+
+.shine-text {
+  font-size: clamp(3rem, 12vw, 8rem);
+  font-weight: 900;
+  letter-spacing: 15px;
+  margin: 0;
+  text-transform: uppercase;
+  
+  /* Shining Effect Setup */
+  background: linear-gradient(
+    to right, 
+    #444 20%, 
+    #fff 40%, 
+    #fff 60%, 
+    #444 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  
+  /* Shine Animation */
+  animation: shine-flow 4s linear infinite;
+}
+
+@keyframes shine-flow {
+  to {
+    background-position: 200% center;
+  }
+}
+
+.progress-container {
+  width: 300px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 20px auto;
+  position: relative;
+  overflow: visible;
+}
+
+.glow-bar {
+  height: 100%;
+  background: #fff;
+  /* High-end Neon Glow */
+  box-shadow: 0 0 15px #fff, 0 0 30px rgba(255, 255, 255, 0.5);
+}
+
+.percent-text {
+  color: #555;
+  font-family: monospace;
+  font-size: 0.9rem;
+  letter-spacing: 5px;
+}
+
+/* Background Subtle Pulse */
+.bg-aura {
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+  filter: blur(100px);
+  z-index: 1;
+}

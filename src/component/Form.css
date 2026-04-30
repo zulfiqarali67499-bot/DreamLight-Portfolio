@@ -1,0 +1,136 @@
+/* --- Form Section --- */
+.head7 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 7%;
+  gap: 15px;
+  text-align: center;
+}
+
+.head7 h1 {
+  background: linear-gradient(to right, white, rgb(39, 29, 82));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2.8rem;
+  font-weight: 800;
+}
+
+.head7 h3 {
+  color: #d1d1d1;
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+/* --- Form Glassmorphism Box --- */
+.form-container {
+  width: 100%;
+  max-width: 750px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 50px;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(45, 45, 131, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.form-container h2 {
+  background: linear-gradient(to left, white, rgb(39, 29, 82));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+/* --- Input Groups --- */
+.input-group {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.field label {
+  color: white;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  font-weight: 500;
+  padding-left: 5px;
+}
+
+.field input, 
+.field select, 
+textarea {
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 2px solid #2f2f87;
+  color: white;
+  outline: none;
+  transition: 0.3s all ease;
+}
+
+.field input:focus, 
+textarea:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  box-shadow: 0 0 15px rgba(47, 47, 135, 0.3);
+}
+
+.field select option {
+  background-color: #1a1a2e; /* Dark background for dropdown */
+  color: white;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  margin-bottom: 30px;
+}
+
+/* --- Submit Button --- */
+.submit-btn {
+  padding: 15px 20px;
+  border-radius: 12px;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.5s all ease;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(to left, rgb(19, 19, 19), rgb(39, 29, 82));
+  box-shadow: 0 0 20px #2d2d83;
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* --- Responsive Fix (768px) --- */
+@media (max-width: 768px) {
+  .head7 h1 { font-size: 2rem; }
+  
+  .form-container { padding: 30px 20px; }
+  
+  .input-group {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .field { width: 100%; }
+}

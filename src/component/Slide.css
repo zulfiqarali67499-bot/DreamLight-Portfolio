@@ -1,0 +1,76 @@
+.head6-container {
+  width: 100%;
+  padding: 60px 7%;
+  /* Deep background consistent with your theme */
+  background: transparent; 
+}
+
+.head6 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.03); /* Subtle glass container */
+  padding: 40px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+}
+
+.slide {
+  flex: 1; /* Charon barabar space lenge */
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  /* Aapka original gradient but slightly more balanced */
+  background: linear-gradient(135deg, rgb(39, 29, 82) 0%, rgb(236, 236, 236) 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  color: #0f0f1a; /* Dark text for better contrast on white gradient */
+  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slide:hover {
+  box-shadow: 0 0 25px rgba(45, 45, 131, 0.5);
+  border-color: #fff;
+}
+
+.slide h3 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  /* Numbers par premium look */
+  letter-spacing: -1px;
+}
+
+.slide h4 {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+/* --- Responsive Fix --- */
+@media (max-width: 1024px) {
+  .head6 {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  .slide {
+    min-width: calc(50% - 20px); /* 2x2 grid on tablet */
+  }
+}
+
+@media (max-width: 600px) {
+  .head6 {
+    padding: 20px;
+  }
+  .slide {
+    min-width: 100%; /* Full width on mobile */
+  }
+  .slide h3 {
+    font-size: 2rem;
+  }
+}

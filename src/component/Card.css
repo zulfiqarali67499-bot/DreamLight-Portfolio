@@ -1,0 +1,101 @@
+.head2 {
+  padding: 80px 7%;
+  position: relative;
+  z-index: 10;
+  text-align: center;
+}
+
+.head2 h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: rgb(226, 226, 226);
+  text-shadow: 0 5px 15px rgba(47, 47, 135, 0.4);
+  margin-bottom: 50px;
+}
+
+/* Grid for better responsiveness */
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.card-1 {
+  background: linear-gradient(145deg, #1a1a45, #000000); /* Aapka color */
+  padding: 40px 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(45, 45, 131, 0.2);
+  transition: box-shadow 0.3s ease, border 0.3s ease;
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-1:hover {
+  border: 1px solid rgba(80, 70, 150, 0.4);
+  box-shadow: 0 15px 40px rgba(45, 45, 131, 0.4);
+}
+
+/* Sizdom Blur Effect on Siblings */
+.card-container:has(.card-1:hover) .card-1:not(:hover) {
+  filter: blur(3px);
+  opacity: 0.6;
+}
+
+.icon-box {
+  color: #fff;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 10px #2d2d83);
+}
+
+.card-1 h2 {
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.card-1 p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #cbcbcb;
+  margin-bottom: 30px;
+}
+
+.card-1 .read {
+  text-decoration: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  color: #e5e7eb;
+  border: 1px solid white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: 0.4s all ease;
+}
+
+.card-1 .read:hover {
+  background: linear-gradient(to left, rgb(19, 19, 19), rgb(24, 24, 70));
+  box-shadow: 0 0 20px #2d2d83;
+  border-color: transparent;
+}
+
+/* --- Responsive (768px) --- */
+@media (max-width: 768px) {
+  .head2 { padding: 50px 5%; }
+  .head2 h1 { font-size: 2rem; }
+  .card-container {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 20px;
+  }
+  .card-1 { padding: 30px 20px; }
+  
+  /* Mobile par blur effect disable karna behtar hai performance ke liye */
+  .card-container:has(.card-1:hover) .card-1:not(:hover) {
+    filter: none;
+    opacity: 1;
+  }
+}

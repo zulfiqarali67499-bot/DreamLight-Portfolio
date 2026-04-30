@@ -1,0 +1,134 @@
+/* --- About Section Container --- */
+.head3 {
+  padding: 80px 7%;
+  overflow-x: hidden;
+}
+
+.head3 h1 {
+  text-align: center;
+  font-size: 2.8rem;
+  color: #fff;
+  text-shadow: 0 5px 15px rgba(45, 45, 131, 0.5);
+  margin-bottom: 60px;
+  font-weight: 800;
+}
+
+/* --- About Layout --- */
+.about {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+/* --- Profile/Code Image Styling --- */
+.about-pic {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.about-pic .circle {
+  width: 400px;
+  height: 400px;
+  border-radius: 20px; /* Rounded square for professional code look */
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 50px rgba(45, 45, 131, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  animation: floatImage 4s ease-in-out infinite;
+}
+
+@keyframes floatImage {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+}
+
+.circle img:hover {
+  filter: brightness(1);
+  transform: scale(1.1);
+}
+
+/* --- Text Content Styling --- */
+.about-me {
+  flex: 1.2;
+}
+
+.about-me h4 {
+  color: #fff;
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  background: linear-gradient(to right, #fff, rgb(39, 29, 82));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.about-me p {
+  color: #d1d1d1;
+  line-height: 1.8;
+  font-size: 1rem;
+  word-spacing: 2px;
+}
+
+.about-me p strong {
+  color: #fff;
+}
+
+/* --- Button Styling --- */
+.about-me button {
+  margin-top: 30px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  color: #e5e7eb;
+  border: 1px solid white;
+  background: transparent;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.5s all ease-in-out;
+}
+
+.about-me button:hover {
+  color: white;
+  background: linear-gradient(to left, rgb(19, 19, 19), rgb(39, 29, 82));
+  box-shadow: 0 0 25px #2d2d83;
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+/* --- Responsive Fixes (768px) --- */
+@media (max-width: 768px) {
+  .head3 {
+    padding: 50px 5%;
+  }
+
+  .about {
+    flex-direction: column;
+    text-align: center;
+    gap: 40px;
+  }
+
+  .about-pic .circle {
+    width: 300px;
+    height: 300px;
+  }
+
+  .about-me h4 {
+    font-size: 1.8rem;
+  }
+
+  .about-me button {
+    margin: 30px auto 0;
+    display: block;
+  }
+}
