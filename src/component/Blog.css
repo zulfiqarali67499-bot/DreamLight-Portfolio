@@ -1,213 +1,193 @@
+/* Blog.css */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700;800&display=swap');
 
 :root {
-  --primary: #a855f7; /* Your signature Purple */
-  --bg-deep: #020205; /* Super dark blue-black */
-  --glass: rgba(255, 255, 255, 0.03);
+  --primary: #a855f7;
+  --primary-glow: rgba(168, 85, 247, 0.4);
+  --bg-deep: #010101; 
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --border-color: rgba(255, 255, 255, 0.08);
+  --text-main: #ffffff;
+  --text-dim: #94a3b8;
 }
 
 .blog-page-wrapper {
   background: var(--bg-deep);
-  min-height: 100vh;
+  color: var(--text-main);
   font-family: 'Plus Jakarta Sans', sans-serif;
-  color: #fff;
   position: relative;
-  overflow-x: hidden;
+  padding: 120px 7% 80px 7%; 
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
-/* --- THE STAR BACKGROUND (AS REQUESTED) --- */
 .stars-overlay {
   position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #010101 100%);
   z-index: -1;
-}
-
-.stars-overlay::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; width: 200%; height: 200%;
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 50px 160px, #ddd, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0));
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  opacity: 0.3;
-  animation: moveStars 100s linear infinite;
-}
-
-@keyframes moveStars {
-  from { transform: translateY(0); }
-  to { transform: translateY(-50%); }
-}
-
-/* --- HERO SECTION --- */
-.blog-hero-section {
-  padding: 180px 20px 80px;
-  text-align: center;
-}
-
-.premium-tag {
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  padding: 6px 18px;
-  border-radius: 100px;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  color: var(--primary);
-  text-transform: uppercase;
-}
-
-.hero-h1 {
-  font-size: clamp(3rem, 10vw, 5.5rem);
-  font-weight: 800;
-  margin: 30px 0;
-  line-height: 1;
-}
-
-.glow-text {
-  background: linear-gradient(to right, #fff, var(--primary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.3));
-}
-
-.hero-p {
-  color: #888;
-  max-width: 600px;
-  margin: 0 auto;
-  font-size: 1.2rem;
-}
-
-/* --- GRID SYSTEM --- */
-.grid-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 60px 5%;
 }
 
 .modern-blog-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 35px;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+  width: 100%;
 }
 
-/* --- PREMIUM CARD --- */
+/* --- TRENDING CARD STYLE --- */
 .premium-card {
-  background: var(--glass);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 30px;
-  padding: 12px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid var(--border-color);
+  border-radius: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Glow effect on hover */
+.premium-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+              rgba(168, 85, 247, 0.15) 0%, 
+              transparent 80%);
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
 }
 
 .premium-card:hover {
-  border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.06);
-  transform: scale(1.03);
+  transform: translateY(-12px) scale(1.02);
+  border-color: rgba(168, 85, 247, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7),
+              0 0 20px -5px var(--primary-glow);
+}
+
+.premium-card:hover::before {
+  opacity: 1;
 }
 
 .image-wrapper {
   position: relative;
-  height: 250px;
-  border-radius: 22px;
+  height: 240px;
+  margin: 12px;
+  border-radius: 20px;
   overflow: hidden;
 }
 
 .image-wrapper img {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  transition: 0.6s ease;
+  transition: transform 1.2s cubic-bezier(0.2, 0, 0.2, 1);
 }
 
-.premium-card:hover img { transform: scale(1.1); }
+.premium-card:hover .image-wrapper img {
+  transform: scale(1.15) rotate(1deg);
+}
 
 .category-overlay {
   position: absolute;
-  bottom: 15px; right: 15px;
-  background: rgba(0,0,0,0.8);
-  padding: 5px 15px;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  font-weight: bold;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  padding: 6px 16px;
+  border-radius: 100px; /* Capsule shape */
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .card-info {
-  padding: 25px 15px;
+  padding: 15px 25px 30px;
 }
 
 .card-meta {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .dot {
-  width: 6px; height: 6px;
+  width: 5px;
+  height: 5px;
   background: var(--primary);
   border-radius: 50%;
-  box-shadow: 0 0 8px var(--primary);
+  box-shadow: 0 0 10px var(--primary);
 }
 
 .card-info h3 {
-  font-size: 1.6rem;
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.2;
+  background: linear-gradient(to bottom, #fff 60%, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .card-info p {
-  color: #999;
+  color: var(--text-dim);
   font-size: 0.95rem;
   line-height: 1.6;
   margin-bottom: 25px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* 2 lines max */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .fancy-link {
-  color: #fff;
   text-decoration: none;
+  color: #fff;
   font-weight: 700;
+  font-size: 0.8rem;
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  transition: 0.3s;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
-
-.stars-overlay::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; 
-  width: 200%; height: 500%; /* Height zyada rakhi hai taake animation lambi chale */
-  background-image: 
-    radial-gradient(1px 1px at 25px 35px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1.5px 1.5px at 60px 120px, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 110px 45px, #fff, rgba(0,0,0,0));
-  background-size: 300px 300px;
-  opacity: 0.4;
-  animation: moveStars 150s linear infinite; /* Slow movement for premium feel */
+.fancy-link:hover {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+  gap: 15px;
 }
 
-/* Star Animation Logic */
-@keyframes moveStars {
-  from { transform: translateY(0); }
-  to { transform: translateY(-1000px); } /* Isse stars upar move honge */
+.fancy-link span {
+  transition: transform 0.3s ease;
 }
-/* Card Hover Glow */
-.premium-card:hover {
-  box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
-  border-color: rgba(168, 85, 247, 0.6);
-}
-.fancy-link:hover { color: var(--primary); }
 
-/* --- RESPONSIVE --- */
-@media (max-width: 1200px) {
+.fancy-link:hover span {
+  transform: translateX(5px);
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
   .modern-blog-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 768px) {
   .modern-blog-grid { grid-template-columns: 1fr; }
-  .hero-h1 { font-size: 3.5rem; }
+  .blog-page-wrapper { padding: 100px 5% 50px 5%; }
 }

@@ -1,11 +1,15 @@
-*{
+html {
+  /* Scrollbar ki jagah reserve rakhta hai takay loading ke baad content jump na kare */
+  scrollbar-gutter: stable;
+  background-color: #010101;
+}
+
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: sans-serif;
+  width: 100% !important;
+  max-width: 100vw;
+  overflow-x: hidden !important;
+  background-color: #010101;
+  -webkit-font-smoothing: antialiased; /* Smother fonts for Apple devices */
 }
-body{
-  background: radial-gradient(circle at top, #1a1a40, #0f0f1a);
-
-}
- 

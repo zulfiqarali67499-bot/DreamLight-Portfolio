@@ -1,82 +1,134 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
-// Components
+// components
 import Navbar from './component/Navbar';
-import Header from './component/Header';
-import Card from './component/Card';
-import About from './component/About';
-import Slider from './component/Slider';
-import Silde from './component/Silde';
-import Form from './component/Form';
 import Footer from './component/Footer';
 import FloatingP from './component/FloatingP'; 
 import PreLoader from './component/PreLoader';
-import Blog from './component/Blog';
-import BlogDetails from './component/BlogDetails';
+import UniversalCTA from './component/UniversalCTA';
 
-// Pages (Naye pages jo aapne banaye hain)
-// Agar aapne alag files nahi banayi, to aap current components ko hi use kar sakte hain
-const App = () => {
+// Pages (Lazy loading)
+const Header = lazy(() => import('./component/Header'));
+const Card = lazy(() => import('./component/Card'));
+const About = lazy(() => import('./component/About'));
+const Slider = lazy(() => import('./component/Slider'));
+const Silde = lazy(() => import('./component/Silde'));
+const Form = lazy(() => import('./component/Form'));
+const Blog = lazy(() => import('./component/Blog'));
+const BlogDetails = lazy(() => import('./component/BlogDetails'));
+
+// Page Transition Wrapper
+const PageWrapper = ({ children, pageKey }) => (
+  <motion.div
+    key={pageKey}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {children}
+  </motion.div>
+);
+
+const AppContent = () => {
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
 
+  // Logic 1: Har route change par 3 second ka loader chalega
   useEffect(() => {
+    setLoading(true);
     const timer = setTimeout(() => {
       setLoading(false);
     }, 3000);
+
     return () => clearTimeout(timer);
-  }, []);
+  }, [location.pathname]);
+
+  // Logic 2: Scroll lock jab tak loading ho rahi hai
+  useEffect(() => {
+    if (loading) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.documentElement.style.overflow = 'auto';
+      document.documentElement.style.overflowX = 'hidden';
+      document.body.style.overflowX = 'hidden';
+      
+      // Loader khatam hotay hi top par scroll
+      window.scrollTo(0, 0);
+    }
+  }, [loading]);
 
   return (
-    <Router>
-      <div className="app-wrapper" style={{ background: '#000', minHeight: '100vh', position: 'relative' }}>
-        
-        {/* 1. Loader */}
-        <AnimatePresence mode="wait">
-          {loading && <PreLoader key="loader" />}
-        </AnimatePresence>
-        
-        {/* 2. Particles (Sirf Loading ke baad) */}
-        {!loading && <FloatingP />} 
-        
-        {/* 3. Main Routing Content */}
-        {!loading && (
+    <div className="app-container" style={{ 
+      background: '#010101', 
+      minHeight: '100vh', 
+      width: '100%',
+      overflowX: 'hidden' 
+    }}>
+      
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <PreLoader key="loader" />
+        ) : (
           <motion.div 
+            key="main-app-content"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8 }}
             style={{ position: 'relative', zIndex: 10 }}
           >
+            <FloatingP /> 
             <Navbar />
             
-            <Routes>
-              {/* Home Page: Saare main sections yahan dikhenge */}
-              <Route path="/" element={
-                <>
-                  <Header />
-                  <Card />
-                  <Silde />
-                  <About />
-                  <Slider />
-                  <Form />
-                </>
-              } />
+            {/* Logic 3: UniversalCTA Home ("/") par show nahi hoga, baqi sab par hoga */}
+            {location.pathname !== "/" && (
+              <div style={{ position: 'relative', zIndex: 5 }}>
+                <UniversalCTA />
+              </div>
+            )}
 
-              {/* Individual Pages (User direct bhi ja sakta hai) */}
-              <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Card />} /> {/* Cards ko as a service use kar sakte hain */}
-              <Route path="/contact" element={<Form />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/blog/:id" element={<BlogDetails />} />
-            </Routes>
+            <main style={{ minHeight: '80vh' }}>
+              <Suspense fallback={null}>
+                <AnimatePresence mode="wait">
+                  <Routes location={location} key={location.pathname}>
+                    <Route path="/" element={
+                      <PageWrapper pageKey="home">
+                        <Header />
+                        <Card />
+                        <Silde />
+                        <About />
+                        <Slider />
+                        <Form />
+                      </PageWrapper>
+                    } />
+
+                    <Route path="/about" element={<PageWrapper pageKey="about"><About /></PageWrapper>} />
+                    <Route path="/services" element={<PageWrapper pageKey="services"><Card /></PageWrapper>} />
+                    <Route path="/contact" element={<PageWrapper pageKey="contact"><Form /></PageWrapper>} />
+                    <Route path="/blog" element={<PageWrapper pageKey="blog"><Blog /></PageWrapper>} />
+                    <Route path="/blog/:id" element={<PageWrapper pageKey={location.pathname}><BlogDetails /></PageWrapper>} />
+                  </Routes>
+                </AnimatePresence>
+              </Suspense>
+            </main>
 
             <Footer />
           </motion.div>
         )}
-      </div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const App = () => {
+  return (
+    <Router>
+      <AppContent />
     </Router>
   );
-}
+};
 
 export default App;
