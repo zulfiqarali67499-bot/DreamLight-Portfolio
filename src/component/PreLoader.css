@@ -78,3 +78,39 @@
   filter: blur(100px);
   z-index: 1;
 }
+/* Media Query for Tablets and Mobiles (768px and below) */
+@media (max-width: 768px) {
+  .shine-text {
+    /* Letter spacing kam ki taake text screen se bahar na jaye */
+    letter-spacing: 5px; 
+    /* Font size ko mobile ke liye thoda mazeed optimize kiya */
+    font-size: clamp(2rem, 10vw, 4rem); 
+  }
+
+  .progress-container {
+    /* Fixed width 300px ko hata kar percentage di taake mobile par fit aaye */
+    width: 80%; 
+    max-width: 250px;
+    margin: 15px auto;
+  }
+
+  .percent-text {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+  }
+
+  .bg-aura {
+    /* Mobile par aura ko thoda bada kiya taake fill lage */
+    width: 90vw;
+    height: 90vw;
+    filter: blur(60px);
+  }
+}
+
+/* Extra small devices (480px and below) */
+@media (max-width: 480px) {
+  .shine-text {
+    letter-spacing: 3px;
+    font-weight: 800;
+  }
+}
