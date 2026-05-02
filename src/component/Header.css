@@ -215,20 +215,89 @@ body {
   pointer-events: none;
 }
 
-/* --- Responsive Layout --- */
+/* --- Optimized Responsive Layout --- */
 @media (max-width: 992px) {
   .head1 {
     flex-direction: column;
+    justify-content: center;
+    padding: 80px 5% 40px 5%; /* Side padding kam kar di taake space mile */
     text-align: center;
-    padding-top: 100px;
     height: auto;
     min-height: 100vh;
+    gap: 50px;
   }
+
+  .content {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Mobile par center alignment elite lagti hai */
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 10vw, 3.5rem); /* Responsive font size */
+    letter-spacing: -1px;
+    margin-bottom: 15px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    padding: 0 10px;
+  }
+
+  /* --- Mobile Buttons (Full Width for reachability) --- */
+  .btn-group {
+    flex-direction: column;
+    width: 100%;
+    max-width: 320px;
+    gap: 12px;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    padding: 16px; /* Touch target bada kiya */
+    text-align: center;
+  }
+
+  /* --- Image Container Mobile Tweaks --- */
   .image-container {
     width: 100%;
-    max-width: 450px;
-    height: 300px;
-    margin-top: 60px;
+    max-width: 400px;
+    height: 280px;
+    margin-top: 20px;
+    transform: none !important; /* Mobile par tilt aksar annoying hota hai */
   }
-  .image-container::after { display: none; } /* Mobile par shadow hide kar dein taake clean lagay */
+
+  /* Mobile par shadow ko thoda subtle rakhein */
+  .image-container::after {
+    display: block; 
+    bottom: -20px;
+    filter: blur(25px);
+    opacity: 0.6;
+  }
+
+  /* Background Blurs ko optimize kiya taake mobile lag na kare */
+  .bg-blur-1, .bg-blur-2 {
+    width: 250px;
+    height: 250px;
+    filter: blur(60px);
+  }
+}
+
+/* --- Small Phones (iPhone SE etc.) --- */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  
+  .badge {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+  }
 }

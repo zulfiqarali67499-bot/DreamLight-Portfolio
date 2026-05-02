@@ -1,206 +1,93 @@
-/* --- 1. Global & Reset --- */
-*, *::before, *::after {
-  box-sizing: border-box;
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;600&display=swap');
+
+:root {
+  --primary: #7c3aed;
+  --bg-dark: #030014;
+  --glass: rgba(255, 255, 255, 0.03);
+  --border: rgba(255, 255, 255, 0.08);
 }
 
-html, body {
-  overflow-x: hidden;
-  width: 100%;
-  margin: 0;
-  padding: 0;
+.premium-nav {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 9999;
+  padding: 30px 0; transition: all 0.4s ease;
 }
 
-/* --- 2. Navigation Structure --- */
-.nav {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 2000;
-  padding: 20px 0;
-  color: #e5e7eb;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+.premium-nav.active {
+  padding: 15px 0; background: rgba(3, 0, 20, 0.8);
+  backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
 }
 
-.nav.active {
-  padding: 12px 0;
-  /* Aapka original background aur blur */
-  background: rgba(15, 15, 26, 0.85);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+.nav-inner {
+  max-width: 1400px; margin: 0 auto; padding: 0 5%;
+  display: flex; justify-content: space-between; align-items: center;
 }
 
-.nav-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* --- LOGO STYLING --- */
+.nav-brand { z-index: 10001; text-decoration: none; }
+.brand-wrapper { display: flex; align-items: center; gap: 12px; perspective: 1000px; }
+.logo-symbol { width: 36px; height: 36px; transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.symbol-svg { width: 100%; height: 100%; fill: none; }
+.rect-main { stroke: var(--primary); stroke-width: 2.5; }
+.circle-inner { fill: var(--primary); }
+.accent-line { stroke: #fff; stroke-width: 2; opacity: 0.5; }
+
+.brand-typography { display: flex; flex-direction: column; line-height: 1; position: relative; }
+.brand-main { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.25rem; color: #fff; letter-spacing: 3px; }
+.brand-sub { font-family: 'Inter'; font-size: 0.65rem; letter-spacing: 5.5px; color: rgba(255,255,255,0.4); margin-top: 4px; }
+.brand-underline { height: 2px; width: 0%; background: linear-gradient(90deg, var(--primary), transparent); transition: 0.4s; margin-top: 2px; }
+
+.nav-brand:hover .logo-symbol { transform: rotateY(180deg); }
+.nav-brand:hover .brand-underline { width: 100%; }
+
+/* --- DOCK MENU --- */
+.desktop-dock-wrapper {
+  position: absolute; left: 50%; transform: translateX(-50%);
+  background: var(--glass); border: 1px solid var(--border);
+  padding: 6px; border-radius: 100px;
+}
+.desktop-dock { display: flex; list-style: none; gap: 4px; }
+.dock-item {
+  position: relative; text-decoration: none; padding: 10px 22px;
+  color: rgba(255,255,255,0.5); font-size: 0.85rem; font-weight: 600; transition: 0.3s;
+}
+.dock-item.active { color: #fff; }
+.active-pill {
+  position: absolute; inset: 0; background: rgba(255,255,255,0.1);
+  border-radius: 100px; z-index: -1; border: 1px solid rgba(255,255,255,0.15);
 }
 
-/* --- 3. Logo --- */
-.logo { display: flex; align-items: center; gap: 10px; }
-.logo img { width: 50px; height: 50px; object-fit: contain; }
-.logo h1 {
-  text-transform: uppercase; font-size: 1.4rem; letter-spacing: 2px;
-  /* Aapka original gradient */
-  background: linear-gradient(to right, white, rgb(80, 70, 150));
-  -webkit-background-clip: text; 
-  -webkit-text-fill-color: transparent;
+/* --- UI ELEMENTS --- */
+.hamburger-box { width: 28px; height: 12px; display: none; flex-direction: column; justify-content: space-between; cursor: pointer; z-index: 10001; position: relative; }
+.line { width: 100%; height: 2px; background: #fff; transition: 0.3s; }
+.is-open .line:nth-child(1) { transform: translateY(5px) rotate(45deg); }
+.is-open .line:nth-child(2) { transform: translateY(-5px) rotate(-45deg); }
+
+.get-started-btn { background: #fff; color: #000; border: none; padding: 12px 28px; border-radius: 100px; font-weight: 700; font-size: 0.75rem; cursor: pointer; }
+
+/* --- MOBILE OVERLAY --- */
+.mobile-overlay { position: fixed; inset: 0; background: rgba(3, 0, 20, 0.4); backdrop-filter: blur(15px); z-index: 10000; }
+.mobile-sheet {
+  position: absolute; bottom: 0; left: 0; width: 100%; background: var(--bg-dark);
+  border-top: 1px solid var(--border); border-radius: 30px 30px 0 0;
+  padding: 80px 40px 60px; max-height: 85vh;
+}
+.mobile-links { display: flex; flex-direction: column; gap: 30px; }
+.m-link {
+  font-family: 'Plus Jakarta Sans'; font-size: 2.5rem; font-weight: 800;
+  color: #fff; text-decoration: none; display: flex; align-items: center; gap: 15px;
+  opacity: 0.3; transition: 0.3s;
+}
+.m-link.m-active { opacity: 1; color: var(--primary); }
+.m-num { font-size: 0.9rem; color: var(--primary); font-weight: 400; }
+
+/* --- RESPONSIVE FIXES --- */
+@media (max-width: 992px) {
+  .desktop-dock-wrapper, .desktop-only { display: none; }
+  .hamburger-box { display: flex; }
 }
 
-/* --- 4. Desktop Menu --- */
-.desktop-menu { display: flex; gap: 30px; list-style: none; }
-.desktop-menu li a {
-  text-decoration: none; color: #e5e7eb; font-size: 0.85rem;
-  text-transform: uppercase; font-weight: 500; letter-spacing: 1px;
-  position: relative; transition: 0.3s;
-}
-
-.desktop-menu li a:hover{
-  /* Aapka original hover gradient */
-  background: linear-gradient(to right, white, #504696);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.desktop-menu li a::after {
-  content: ''; width: 100%; height: 2px; bottom: -5px; left: 0;
-  position: absolute; background: white; transform: scaleX(0);
-  transition: 0.3s transform ease; transform-origin: right;
-}
-.desktop-menu li a:hover::after { transform: scaleX(1); transform-origin: left; }
-
-/* Desktop Button */
-.get button {
-  padding: 10px 24px; border-radius: 6px; color: white;
-  border: 1px solid rgba(255,255,255,0.3); background: transparent;
-  cursor: pointer; transition: 0.4s; font-weight: 600;
-}
-.get button:hover {
-  /* Aapka original button hover */
-  background: linear-gradient(to left, #131313, #271d52);
-  box-shadow: 0 0 20px #2d2d83; 
-  border-color: transparent;
-}
-
-/* --- 5. Mobile & Responsive Logic --- */
-
-.hamburger {
-  display: none; width: 28px; height: 18px;
-  position: relative; cursor: pointer; z-index: 3000;
-}
-.hamburger span {
-  display: block; width: 100%; height: 2px; background: #fff;
-  position: absolute; transition: 0.4s;
-}
-.hamburger span:nth-child(1) { top: 0; }
-.hamburger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
-.hamburger span:nth-child(3) { bottom: 0; }
-
-.hamburger.open span:nth-child(1) { transform: rotate(45deg); top: 8px; }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: rotate(-45deg); bottom: 8px; }
-
-.mobile-menu-overlay {
-  position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-  /* Aapka original mobile gradient */
-  background: linear-gradient(135deg, #0f0f1a 0%, #1a1a40 100%);
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  z-index: 2500;
-  overflow: hidden;
-}
-
-.mobile-links {
-  display: flex; flex-direction: column; align-items: center;
-  gap: 20px; list-style: none; width: 100%;
-}
-
-.mobile-links a {
-  position: relative;
-  font-size: 1.6rem;
-  color: #e5e7eb;
-  text-decoration: none;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: inline-block;
-  padding: 10px 0;
-  transition: 0.3s;
-}
-
-.mobile-links a:hover {
-  background: linear-gradient(to right, white, #504696);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-/* --- Mobile Links with Underline Animation --- */
-.mobile-links a {
-  position: relative;
-  font-size: 1.6rem;
-  color: #e5e7eb;
-  text-decoration: none;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  display: inline-block;
-  padding: 10px 0;
-  transition: 0.3s;
-}
-
-/* Mobile After Effect (Underline) */
-.mobile-links a::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background: white; /* Aapka original color */
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Hover par underline show hogi */
-.mobile-links a:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-.mobile-get-btn {
-  margin-top: 30px;
-  padding: 12px 35px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  background: transparent;
-  transition: 0.4s;
-}
-
-.mobile-get-btn:hover {
-  background: linear-gradient(to left, #131313, #271d52);
-  box-shadow: 0 0 25px rgba(45, 33, 131, 0.6);
-  transform: translateY(-3px);
-}
-
-/* --- 6. Breakpoints --- */
-
-@media (max-width: 768px) {
-  .desktop-menu, .get.desktop-only { display: none; }
-  .hamburger { display: flex; }
-  .nav-container { padding: 0 5%; }
-  .logo h1 { font-size: 1.1rem; }
-  .mobile-links { gap: 10px; }
-  .mobile-links a {
-    font-size: 1.4rem; 
-    letter-spacing: 1px;
-  }
-  
-  .mobile-links a::after {
-    height: 1.5px; 
-  }  
+@media (max-width: 480px) {
+  .brand-main { font-size: 1.1rem; letter-spacing: 2px; }
+  .brand-sub { font-size: 0.55rem; letter-spacing: 4px; }
+  .m-link { font-size: 2rem; }
 }
