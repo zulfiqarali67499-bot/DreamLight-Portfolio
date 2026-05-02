@@ -1,41 +1,45 @@
 .cursor-dot, .cursor-ring {
   position: fixed;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
   pointer-events: none;
-  z-index: 10000000;
+  z-index: 9999999; /* Ensure it's above everything */
   border-radius: 50%;
+  will-change: transform; /* Hardware acceleration */
 }
 
 .cursor-dot {
   width: 8px;
   height: 8px;
-  background-color: #fff;
-  transition: opacity 0.3s ease;
+  background-color: #ffffff;
+  /* Glow effect */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .cursor-ring {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(2px); /* Premium Glass effect on hover */
-  transition: background-color 0.4s ease, border 0.4s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(4px); /* Stronger glass effect */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .cursor-text {
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  color: #fff;
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #ffffff;
+  pointer-events: none;
 }
 
-/* Mix-blend-mode: Ye cursor ko background ke hisab se color change karne mein madad deta hai */
-/* Agar aap dark background par white text chahte hain toh ye elite feature hai */
-/* .cursor-dot { mix-blend-mode: difference; } */
-
+/* Hide on mobile for better UX */
 @media (max-width: 1024px) {
-  .cursor-dot, .cursor-ring { display: none; }
-  * { cursor: auto !important; }
+  .cursor-dot, .cursor-ring {
+    display: none;
+  }
+  body, a, button {
+    cursor: auto !important;
+  }
 }

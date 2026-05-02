@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { motion, useSpring, useMotionValue ,AnimatePresence} from "framer-motion"
 import "./CustomCursor.css";
 
 const CustomCursor = () => {
   const [cursorType, setCursorType] = useState("default");
 
-  // Mouse coordinates
+  // Mouse coordinates - Use x/y for better GPU performance
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth spring physics for the outer ring (Elite Lag Effect)
-  const ringX = useSpring(mouseX, { stiffness: 150, damping: 20 });
-  const ringY = useSpring(mouseY, { stiffness: 150, damping: 20 });
+  // Smooth spring physics for the outer ring
+  const ringX = useSpring(mouseX, { stiffness: 150, damping: 25 });
+  const ringY = useSpring(mouseY, { stiffness: 150, damping: 25 });
 
   useEffect(() => {
     const moveCursor = (e) => {
@@ -20,8 +20,8 @@ const CustomCursor = () => {
     };
 
     const handleMouseEnter = (e) => {
-      const target = e.target;
-      if (target.closest("a, button, input, .clickable")) {
+      // Check if the element or its parent is clickable
+      if (e.target.closest("a, button, input, .clickable, .project-card")) {
         setCursorType("hovered");
       }
     };
@@ -43,43 +43,57 @@ const CustomCursor = () => {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <>
       {/* Inner Sharp Dot */}
       <motion.div
         className="cursor-dot"
-        style={{ left: mouseX, top: mouseY }}
-        animate={{
-          scale: cursorType === "clicked" ? 0.5 : 1,
-          opacity: cursorType === "hovered" ? 0 : 1, // Hover par dot gaib ho jayega for clean look
+        style={{ 
+          x: mouseX, 
+          y: mouseY,
+          translateX: "-50%", // Properly centering
+          translateY: "-50%" 
         }}
+        animate={{
+          scale: cursorType === "clicked" ? 0.6 : 1,
+          opacity: cursorType === "hovered" ? 0 : 1,
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
       
       {/* Outer Fluid Ring */}
       <motion.div
         className="cursor-ring"
-        style={{ left: ringX, top: ringY }}
-        animate={{
-          width: cursorType === "hovered" ? 90 : 30,
-          height: cursorType === "hovered" ? 90 : 30,
-          backgroundColor: cursorType === "hovered" ? "rgba(255, 255, 255, 0.08)" : "transparent",
-          borderColor: cursorType === "hovered" ? "rgba(255, 255, 255, 0.6)" : "rgba(255, 255, 255, 0.2)",
-          borderWidth: cursorType === "hovered" ? "1px" : "1.5px",
+        style={{ 
+          x: ringX, 
+          y: ringY,
+          translateX: "-50%",
+          translateY: "-50%"
         }}
-        transition={{ type: "spring", stiffness: 200, damping: 30 }}
+        animate={{
+          width: cursorType === "hovered" ? 100 : 35,
+          height: cursorType === "hovered" ? 100 : 35,
+          backgroundColor: cursorType === "hovered" ? "rgba(255, 255, 255, 0.1)" : "transparent",
+          borderColor: cursorType === "hovered" ? "rgba(255, 255, 255, 0.8)" : "rgba(255, 255, 255, 0.3)",
+          borderWidth: cursorType === "hovered" ? "1px" : "2px",
+        }}
+        transition={{ type: "spring", stiffness: 200, damping: 30, mass: 0.8 }}
       >
-        {/* Hover Text (Optional: Adds an elite touch) */}
-        {cursorType === "hovered" && (
-          <motion.span 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            className="cursor-text"
-          >
-            VIEW
-          </motion.span>
-        )}
+        {/* Elite "VIEW" text reveal */}
+        <AnimatePresence>
+          {cursorType === "hovered" && (
+            <motion.span 
+              initial={{ opacity: 0, scale: 0.5 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              exit={{ opacity: 0, scale: 0.5 }}
+              className="cursor-text"
+            >
+              VIEW
+            </motion.span>
+          )}
+        </AnimatePresence>
       </motion.div>
     </>
   );
