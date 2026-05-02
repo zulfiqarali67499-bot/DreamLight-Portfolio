@@ -1,176 +1,233 @@
-/* --- Hero Section (Aapke Colors ke Saath) --- */
-.head1 {
-  height: 100vh;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0 7%;
-  /* Aapka Original Background */
-  background: transparent !important;
-  position: relative;
-  overflow: hidden;
-  z-index: 10;
+/* --- Header.css (Premium Shadow Edition) --- */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  --primary-purple: #7c3aed;
+  --bg-dark: #030014;
+  --text-main: #ffffff;
+  --text-dim: #94a3b8;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --border-color: rgba(255, 255, 255, 0.1);
 }
 
-/* --- Global Background Blurs --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+.head1 {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+  position: relative;
+  overflow: hidden;
+  background: transparent;
+}
+
+/* --- Animated Background Blurs --- */
 .bg-blur-1, .bg-blur-2 {
-  position: fixed; /* Fixed taake scroll karne par bhi background par rahein */
-  width: 450px;
-  height: 450px;
+  position: absolute;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   filter: blur(100px);
-  z-index: -1; /* Content ke peeche */
-  opacity: 0.5;
-  pointer-events: none; /* Mouse interactions ko disturb na karein */
+  z-index: 1;
+  opacity: 0.4;
 }
 
 .bg-blur-1 {
   top: -10%;
   right: -5%;
-  background: rgba(45, 45, 131, 0.4);
-  animation: moveBlur1 15s infinite alternate ease-in-out;
+  background: radial-gradient(circle, var(--primary-purple), transparent);
+  animation: moveGlow 15s infinite alternate;
 }
 
 .bg-blur-2 {
   bottom: -10%;
   left: -5%;
-  background: rgba(39, 29, 82, 0.4);
-  animation: moveBlur2 20s infinite alternate ease-in-out;
+  background: radial-gradient(circle, #1e1b4b, transparent);
+  animation: moveGlow 20s infinite alternate-reverse;
 }
 
-/* --- Floating Animations --- */
-@keyframes moveBlur1 {
+@keyframes moveGlow {
   0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(-100px, 150px) scale(1.2); }
-  100% { transform: translate(50px, -50px) scale(1); }
+  100% { transform: translate(-50px, 50px) scale(1.2); }
 }
 
-@keyframes moveBlur2 {
-  0% { transform: translate(0, 0) scale(1); }
-  50% { transform: translate(150px, -100px) scale(1.3); }
-  100% { transform: translate(-50px, 50px) scale(1); }
-}
-
-/* --- Body Settings --- */
-body {
-  background-color: #000; /* Deep black background */
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-/* --- Content Styling --- */
+/* --- Content Section --- */
 .content {
-  color: white;
-  max-width: 650px;
   position: relative;
-  z-index: 5;
+  z-index: 10;
+  max-width: 600px;
 }
 
-.content h1 {
-  /* Aapka original white to purple gradient */
-  background: linear-gradient(to right, white, rgb(39, 29, 82));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
-  font-size: 3.2rem;
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  color: #a78bfa;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+.hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 4.2rem;
   font-weight: 800;
   line-height: 1.1;
-}
-
-.content h2 {
-  font-size: 1.7rem;
+  letter-spacing: -2px;
   margin-bottom: 20px;
-  font-weight: 600;
 }
 
-.content span {
-  /* Auto-typed text ka gradient */
-  background: linear-gradient(to left, white, rgb(39, 29, 82));
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, var(--primary-purple) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.content p {
-  line-height: 1.6;
-  font-size: 1rem;
+.hero-subtitle {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.name-highlight {
+  color: var(--primary-purple);
+  font-weight: 700;
+}
+
+.hero-desc {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  line-height: 1.7;
   margin-bottom: 40px;
-  color: rgb(203, 203, 203); /* Aapka gray text */
-  word-spacing: 2px;
+  max-width: 500px;
 }
 
-/* --- Professional Button --- */
-.content a {
-  display: inline-block;
-  padding: 12px 30px;
-  text-decoration: none;
-  border-radius: 8px; /* Square edges as per your previous style */
-  color: #e5e7eb;
-  border: 1px solid transparent;
-  box-shadow: 0px 0px 10px #e5e7eb;
-  background: transparent;
-  transition: 0.5s all cubic-bezier(0.4, 0, 0.2, 1);
+/* --- Buttons --- */
+.btn-group {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-primary, .btn-secondary {
+  padding: 14px 32px;
+  border-radius: 12px;
   font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: 0.3s all ease;
 }
 
-.content a:hover {
+.btn-primary {
+  background: var(--primary-purple);
   color: white;
-  border: 1px solid transparent;
-  /* Aapka original hover logic */
-  background: linear-gradient(to left, rgb(19, 19, 19), rgb(39, 29, 82));
-  box-shadow: 0 0 25px #2d2d83;
-  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -5px rgba(124, 58, 237, 0.4);
 }
 
-/* --- 3D Image Card Refined --- */
-.image {
-  width: 580px;
-  height: 380px;
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+
+/* --- Right Side: 3D Image Container with SHADOW (Saya) --- */
+.image-container {
   position: relative;
-  z-index: 5;
+  z-index: 10;
+  width: 550px;
+  height: 400px;
   transform-style: preserve-3d;
-  transition: transform 0.2s ease-out; /* Super smooth movement */
-  box-shadow: 0 0 25px #2f2f87; /* Aapka shadow color */
-  border-radius: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease-out; /* Smooth hover transition */
 }
 
-.image img {
+/* Card ka asli saya (Floating Shadow) */
+.image-container::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; /* Neeche position */
+  left: 10%;
+  width: 80%;
+  height: 40px;
+  background: rgba(124, 58, 237, 0.25); /* Purple tint shadow */
+  filter: blur(35px); /* Softness */
+  border-radius: 50%;
+  z-index: -1;
+  transition: all 0.3s ease;
+}
+
+/* Hover par saya mazeed pheel jayega aur dark ho jayega */
+.image-container:hover::after {
+  bottom: -45px;
+  width: 90%;
+  background: rgba(124, 58, 237, 0.4);
+  filter: blur(45px);
+}
+
+.glass-card {
   width: 100%;
   height: 100%;
-  border-radius: 15px;
-  object-fit: cover;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 12px;
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  position: relative;
+  /* Box shadow for card edges */
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5); 
 }
 
-/* --- Responsive (768px Only) --- */
-@media (max-width: 768px) {
+.glass-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  transition: 0.5s ease;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), transparent);
+  pointer-events: none;
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 992px) {
   .head1 {
     flex-direction: column;
-    justify-content: center;
     text-align: center;
-    padding: 80px 5%;
+    padding-top: 100px;
     height: auto;
     min-height: 100vh;
   }
-
-  .content { 
-    width: 100%; 
-    margin-bottom: 60px; 
-    order: 1; /* Text pehle aayega */
+  .image-container {
+    width: 100%;
+    max-width: 450px;
+    height: 300px;
+    margin-top: 60px;
   }
-
-  .content h1 { font-size: 2.2rem; }
-  
-  .image {
-    width: 90%; /* Mobile par side margins */
-    height: 280px;
-    margin: 0 auto;
-    order: 2;
-  }
-
-  .bg-blur-1, .bg-blur-2 {
-    width: 250px;
-    height: 250px;
-  }
+  .image-container::after { display: none; } /* Mobile par shadow hide kar dein taake clean lagay */
 }

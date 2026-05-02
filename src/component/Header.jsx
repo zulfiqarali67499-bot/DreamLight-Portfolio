@@ -11,31 +11,26 @@ const Header = () => {
     const card = cardRef.current;
     if (!card) return;
     const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = -(y - centerY) / 18; 
-    const rotateY = (x - centerX) / 18;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    
+    // Smooth 3D tilt effect
+    const rotateX = (y - 0.5) * -20; 
+    const rotateY = (x - 0.5) * 20;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
   };
 
   const handleMouseLeave = () => {
     if (cardRef.current) {
-      cardRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg)";
+      cardRef.current.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
     }
   };
 
   useEffect(() => {
     const typed = new Typed(".auto", {
-      strings: [
-        "Full Stack Developer",
-        "UI/UX Enthusiast",
-        "React.js Specialist",
-        "Creative Coder"
-      ],
-      typeSpeed: 60,
-      backSpeed: 40,
+      strings: ["Full Stack Developer", "UI/UX Specialist", "React Expert"],
+      typeSpeed: 50,
+      backSpeed: 30,
       loop: true
     });
     return () => { typed.destroy(); };
@@ -43,58 +38,55 @@ const Header = () => {
 
   return (
     <section className='head1'>
-      {/* Background Layer */}
       <div className="bg-blur-1"></div>
       <div className="bg-blur-2"></div>
       <FloatingP />
 
-      {/* Left Content Section */}
       <motion.div 
-        initial={{ opacity: 0, x: -60 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
         className="content"
       >
-        <motion.h1
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          Crafting Seamless <br /> Digital Experiences
-        </motion.h1>
+        <div className="badge">Available for Hire</div>
+        <h1 className="hero-title">
+          Crafting <span className="gradient-text">Digital</span> <br /> 
+          Masterpieces
+        </h1>
         
-        <h2>
-          Hi, I'm <span style={{color: '#fff', fontWeight: '700'}}>Ali Shair</span>. <br />I'm a <br />
+        <h2 className="hero-subtitle">
+          Hi, I'm <span className="name-highlight">Ali Shair</span>. <br />
           <span className='auto'></span>
         </h2>
         
-        <p>
-          Expertise in building scalable web applications with a focus on 
-          high-end UI/UX and seamless performance. Delivering modern solutions 
-          for clients worldwide.
+        <p className="hero-desc">
+          I build high-performance, visually stunning web applications. 
+          Turning complex problems into elegant, user-centric solutions.
         </p>
         
-        <motion.a 
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          href="#contact"
-        >
-          Start a Project
-        </motion.a>
+        <div className="btn-group">
+          <motion.a whileHover={{ y: -5 }} href="#contact" className="btn-primary">
+            Start a Project
+          </motion.a>
+          <motion.a whileHover={{ y: -5 }} href="#work" className="btn-secondary">
+            View Work
+          </motion.a>
+        </div>
       </motion.div>
 
-      {/* Right 3D Image Card */}
       <motion.div
         ref={cardRef}
-        initial={{ opacity: 0, scale: 0.9, x: 50 }}
-        animate={{ opacity: 1, scale: 1, x: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        className="image"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 1.2 }}
+        className="image-container"
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        <img src="/Futuristic 3D UI design concept.png" alt="Ali Shair Portfolio UI" />
-        <div className="card-shine"></div>
+        <div className="glass-card">
+          <img src="/Futuristic 3D UI design concept.png" alt="Portfolio UI" />
+          <div className="card-overlay"></div>
+        </div>
       </motion.div>
     </section>
   );

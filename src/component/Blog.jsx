@@ -11,90 +11,79 @@ const Blog = () => {
       category: "Architecture", 
       date: "May 2026", 
       image: "https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?q=80&w=1200", 
-      desc: "How the new compiler automates re-rendering for high-end web applications." 
+      desc: "An in-depth look at how the new React Compiler is redefining performance standards by automating memoization.",
+      type: "hero-card" 
     },
     { 
       id: 2, 
-      title: "Glassmorphism in 2026", 
+      title: "Glassmorphism 2026", 
       category: "UI Design", 
-      date: "May 2026", 
+      date: "April 2026", 
       image: "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=1200", 
-      desc: "Creating depth using multi-layered blur and dynamic mesh gradients for premium UI." 
+      desc: "Mastering depth and light with multi-layered blur.",
+      type: "vertical-card"
     },
     { 
       id: 3, 
-      title: "Node.js at Scale", 
+      title: "The Future of Node.js at Scale", 
       category: "Backend", 
-      date: "May 2026", 
+      date: "April 2026", 
       image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200", 
-      desc: "Handling millions of concurrent requests with distributed worker threads." 
+      desc: "Handling millions of requests with distributed worker threads and high-performance native support.",
+      type: "wide-banner" 
     }
   ];
 
-  // Mouse Move tracking for the glow effect
-  const handleMouseMove = (e) => {
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    card.style.setProperty('--mouse-x', `${x}px`);
-    card.style.setProperty('--mouse-y', `${y}px`);
-  };
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, scale: 0.9, y: 30 },
-    visible: { 
-      opacity: 1, 
-      scale: 1, 
-      y: 0, 
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
-    }
-  };
-
   return (
-    <div className="blog-page-wrapper">
-      <div className="stars-overlay"></div>
+    <section className="elite-blog-container">
+      <div className="ambient-glow" />
+      
+      <div className="wrapper">
+        <header className="blog-head">
+          <div className="title-area">
+            <span className="pre-title">Curated Knowledge</span>
+            <h2>Digital <span>Manifesto</span></h2>
+          </div>
+          <p>Documenting high-end engineering and international UI/UX standards.</p>
+        </header>
 
-      <motion.div 
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="modern-blog-grid"
-      >
-        {blogs.map((blog) => (
-          <motion.div 
-            key={blog.id}
-            variants={itemVariants}
-            className="premium-card"
-            onMouseMove={handleMouseMove}
-          >
-            <div className="image-wrapper">
-              <div className="category-overlay">{blog.category}</div>
-              <img src={blog.image} alt={blog.title} loading="lazy" />
-            </div>
-            
-            <div className="card-info">
-              <div className="card-meta">
-                <span>{blog.date}</span>
-                <span className="dot"></span>
-                <span>5 min read</span>
+        <div className="master-bento-grid">
+          {blogs.map((blog, index) => (
+            <motion.div 
+              key={blog.id}
+              className={`bento-item ${blog.type}`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: index * 0.1 }}
+            >
+              <div className="media-box">
+                <img src={blog.image} alt={blog.title} />
+                <div className="glass-label">{blog.category}</div>
               </div>
-              <h3>{blog.title}</h3>
-              <p>{blog.desc}</p>
-              <NavLink to={`/blog/${blog.id}`} className="fancy-link">
-                CASE STUDY <span>→</span>
-              </NavLink>
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    </div>
+
+              <div className="content-box">
+                <div className="meta-row">
+                  <span className="date-tag">{blog.date}</span>
+                  <div className="line-sep" />
+                  <span className="reading-time">5 MIN READ</span>
+                </div>
+                <h3>{blog.title}</h3>
+                <p>{blog.desc}</p>
+                <NavLink to={`/blog/${blog.id}`} className="elite-link">
+                  <span>LEARN MORE</span>
+                  <div className="arrow-box">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </div>
+                </NavLink>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -1,136 +1,220 @@
-/* --- Form Section --- */
-.head7 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 80px 7%;
-  gap: 15px;
-  text-align: center;
-}
+/* --- ELITE DREAMLIGHT CONTACT SECTION --- */
 
-.head7 h1 {
-  background: linear-gradient(to right, white, rgb(39, 29, 82));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 2.8rem;
-  font-weight: 800;
-}
-
-.head7 h3 {
-  color: #d1d1d1;
-  font-size: 1.2rem;
-  margin-bottom: 40px;
-}
-
-/* --- Form Glassmorphism Box --- */
-.form-container {
-  width: 100%;
-  max-width: 750px;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 50px;
+.elite-contact {
+  padding: 140px 10%;
+  background: #020205;
+  position: relative;
   overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 0 30px rgba(45, 45, 131, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  color: #fff;
 }
 
-.form-container h2 {
-  background: linear-gradient(to left, white, rgb(39, 29, 82));
+/* Luxury Background Elements */
+.bg-blur-elements .circle {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  filter: blur(140px);
+  opacity: 0.12;
+  z-index: 1;
+}
+.cyan { top: -5%; left: -5%; background: #3b82f6; }
+.purple { bottom: -5%; right: -5%; background: #a855f7; }
+
+.content-wrap {
+  position: relative;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 100px;
+  align-items: center;
+}
+
+/* Typography & Left Content */
+.badge {
+  color: #3b82f6;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 0.7rem;
+  margin-bottom: 25px;
+  display: block;
+}
+
+.text-area h1 {
+  font-size: 4.5rem;
+  line-height: 1;
+  font-weight: 900;
+  margin-bottom: 25px;
+  letter-spacing: -2px;
+}
+
+.text-area h1 span {
+  display: block;
+  background: linear-gradient(90deg, #3b82f6, #a855f7);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-size: 2rem;
+}
+
+.text-area p {
+  color: #94a3b8;
+  font-size: 1.15rem;
+  max-width: 450px;
+  line-height: 1.7;
+}
+
+.contact-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.stat { display: flex; flex-direction: column; gap: 5px; }
+.stat-val { font-size: 1.8rem; font-weight: 800; color: #fff; }
+.stat-lab { font-size: 0.75rem; color: #3b82f6; text-transform: uppercase; font-weight: 700; }
+
+/* The Animated Form Card */
+.form-card {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  padding: 60px;
+  border-radius: 35px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.border-glow-animation {
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: conic-gradient(transparent, transparent, transparent, #3b82f6);
+  animation: rotateBorder 8s linear infinite;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+@keyframes rotateBorder {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Fields Styling */
+.input-flex { display: flex; gap: 25px; }
+
+.glass-field {
+  position: relative;
   margin-bottom: 40px;
-}
-
-/* --- Input Groups --- */
-.input-group {
-  display: flex;
-  gap: 25px;
-  margin-bottom: 25px;
-}
-
-.field {
   flex: 1;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
 }
 
-.field label {
-  color: white;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
-  font-weight: 500;
-  padding-left: 5px;
-}
-
-.field input, 
-.field select, 
-textarea {
-  padding: 12px 20px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 2px solid #2f2f87;
-  color: white;
+.glass-field input, 
+.glass-field select, 
+.glass-field textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 18px;
+  color: #fff;
+  font-size: 1rem;
   outline: none;
-  transition: 0.3s all ease;
+  transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.field input:focus, 
-textarea:focus {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: white;
-  box-shadow: 0 0 15px rgba(47, 47, 135, 0.3);
+.glass-field label {
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  color: rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  transition: 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.field select option {
-  background-color: #1a1a2e; /* Dark background for dropdown */
-  color: white;
+/* Interactions */
+.glass-field input:focus, 
+.glass-field textarea:focus,
+.glass-field select:focus {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: #3b82f6;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.15);
 }
 
-textarea {
-  width: 100%;
-  resize: none;
-  margin-bottom: 30px;
+.glass-field input:focus ~ label,
+.glass-field input:not(:placeholder-shown) ~ label,
+.glass-field select:focus ~ label,
+.glass-field select:valid ~ label,
+.glass-field textarea:focus ~ label,
+.glass-field textarea:not(:placeholder-shown) ~ label {
+  top: -28px;
+  left: 5px;
+  font-size: 0.85rem;
+  color: #3b82f6;
+  font-weight: 800;
+  letter-spacing: 1px;
 }
 
-/* --- Submit Button --- */
-.submit-btn {
-  padding: 15px 20px;
-  border-radius: 12px;
-  background: transparent;
-  color: white;
-  border: 1px solid white;
-  font-size: 1.1rem;
-  font-weight: 600;
+/* Elite Select Dropdown Styling */
+.glass-field select {
+  appearance: none;
   cursor: pointer;
-  transition: 0.5s all ease;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 16px;
 }
 
-.submit-btn:hover {
-  background: linear-gradient(to left, rgb(19, 19, 19), rgb(39, 29, 82));
-  box-shadow: 0 0 20px #2d2d83;
-  border-color: transparent;
-  transform: translateY(-3px);
+.glass-field select option {
+  background-color: #0a0a14;
+  color: #fff;
 }
-form {
-  display: flex;
-  flex-direction: column;
+
+/* The Submission Button */
+.elite-btn {
   width: 100%;
+  padding: 22px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 18px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition: 0.5s;
 }
 
-/* --- Responsive Fix (768px) --- */
+.elite-btn:hover {
+  background: #3b82f6;
+  color: #fff;
+  box-shadow: 0 25px 50px rgba(59, 130, 246, 0.4);
+}
+
+.elite-btn svg {
+  transition: 0.4s;
+}
+
+.elite-btn:hover svg {
+  transform: translateX(8px);
+}
+
+/* Responsive Scaling */
+@media (max-width: 1100px) {
+  .text-area h1 { font-size: 3.5rem; }
+  .content-wrap { gap: 50px; }
+}
+
+@media (max-width: 992px) {
+  .content-wrap { grid-template-columns: 1fr; text-align: center; }
+  .text-area p, .contact-stats { margin-left: auto; margin-right: auto; justify-content: center; }
+  .glass-field label { left: 0; right: 0; text-align: center; } /* Labels adjust for mobile center */
+}
+
 @media (max-width: 768px) {
-  .head7 h1 { font-size: 2rem; }
-  
-  .form-container { padding: 30px 20px; }
-  
-  .input-group {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .field { width: 100%; }
+  .input-flex { flex-direction: column; gap: 0; }
+  .form-card { padding: 40px 25px; border-radius: 25px; }
+  .text-area h1 { font-size: 2.8rem; }
 }

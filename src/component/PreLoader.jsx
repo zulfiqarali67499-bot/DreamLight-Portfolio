@@ -8,48 +8,56 @@ const PreLoader = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setPercent((prev) => (prev < 100 ? prev + 1 : 100));
-    }, 20);
+    }, 25);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <motion.div 
-      className="shine-loader"
-      exit={{ opacity: 0, transition: { duration: 1 } }}
+      className="elite-portal-wrapper"
+      initial={{ opacity: 1 }}
+      // Exit Logic: Center Collapse + Blur + Scaling down to zero
+      exit={{ 
+        scale: 0,
+        opacity: 0,
+        filter: "blur(20px)",
+        transition: { 
+          duration: 0.7, 
+          ease: [0.76, 0, 0.24, 1] // Professional "In-out" easing
+        } 
+      }}
     >
-      <div className="loader-inner">
-        {/* Main Shiny Text */}
-        <div className="text-wrapper">
-          <motion.h1 
-            className="shine-text"
-            animate={{ 
-              opacity: [0.7, 1, 0.7], // Breathing/Blinking Effect
-              scale: [0.98, 1, 0.98] 
-            }}
-            transition={{ 
-              duration: 3, 
-              repeat: Infinity, 
-              ease: "easeInOut" 
-            }}
-          >
-            DREAMLIGHT
-          </motion.h1>
-          
-          {/* Progress Line with Glow */}
-          <div className="progress-container">
-            <motion.div 
-              className="glow-bar"
-              initial={{ width: 0 }}
-              animate={{ width: `${percent}%` }}
-              transition={{ ease: "linear" }}
-            />
+      <div className="elite-core">
+        <motion.div 
+          className="content-gate"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, ease: "easeOut" }}
+        >
+          {/* Shiny Elite Text */}
+          <h1 className="ultra-shine-text">DREAMLIGHT</h1>
+
+          <div className="status-container">
+            <div className="elite-progress-track">
+              <motion.div 
+                className="elite-progress-fill"
+                initial={{ width: 0 }}
+                animate={{ width: `${percent}%` }}
+                transition={{ ease: "circOut" }}
+              />
+            </div>
+            
+            <div className="meta-labels">
+              <span className="label-left">CORE_ESTABLISHED</span>
+              <span className="percent-indicator">{percent}%</span>
+              <span className="label-right">V.2.0.26</span>
+            </div>
           </div>
-          <span className="percent-text">{percent}%</span>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Decorative background light */}
-      <div className="bg-aura"></div>
+      {/* Background Aura that also collapses */}
+      <div className="portal-aura"></div>
     </motion.div>
   );
 };

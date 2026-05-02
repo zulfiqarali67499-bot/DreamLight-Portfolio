@@ -8,6 +8,7 @@ import Footer from './component/Footer';
 import FloatingP from './component/FloatingP'; 
 import PreLoader from './component/PreLoader';
 import UniversalCTA from './component/UniversalCTA';
+import CustomCursor from './component/CustomCursor'; // Naya component
 
 // Pages (Lazy loading)
 const Header = lazy(() => import('./component/Header'));
@@ -69,6 +70,9 @@ const AppContent = () => {
       overflowX: 'hidden' 
     }}>
       
+      {/* ELITE UPGRADE: Custom Cursor hamesha active rahega */}
+      <CustomCursor />
+
       <AnimatePresence mode="wait">
         {loading ? (
           <PreLoader key="loader" />
@@ -83,7 +87,7 @@ const AppContent = () => {
             <FloatingP /> 
             <Navbar />
             
-            {/* Logic 3: UniversalCTA Home ("/") par show nahi hoga, baqi sab par hoga */}
+            {/* Logic 3: UniversalCTA Home ("/") par show nahi hoga */}
             {location.pathname !== "/" && (
               <div style={{ position: 'relative', zIndex: 5 }}>
                 <UniversalCTA />

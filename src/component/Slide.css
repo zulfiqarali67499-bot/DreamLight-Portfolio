@@ -1,76 +1,125 @@
-.head6-container {
-  width: 100%;
-  padding: 60px 7%;
-  /* Deep background consistent with your theme */
-  background: transparent; 
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
+.data-hub-section {
+  background: #000000; /* Matching your premium dark theme */
+  padding: 100px 7%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow: hidden;
 }
 
-.head6 {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  background: rgba(255, 255, 255, 0.03); /* Subtle glass container */
-  padding: 40px;
-  border-radius: 20px;
+.hub-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+/* 3 Cards Row Layout */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.hub-widget {
+  background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 50px 40px;
+  border-radius: 32px;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   backdrop-filter: blur(10px);
 }
 
-.slide {
-  flex: 1; /* Charon barabar space lenge */
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
-  /* Aapka original gradient but slightly more balanced */
-  background: linear-gradient(135deg, rgb(39, 29, 82) 0%, rgb(236, 236, 236) 100%);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  color: #0f0f1a; /* Dark text for better contrast on white gradient */
-  transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.hub-widget:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-12px);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
-.slide:hover {
-  box-shadow: 0 0 25px rgba(45, 45, 131, 0.5);
-  border-color: #fff;
+.widget-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
 }
 
-.slide h3 {
-  font-size: 2.5rem;
+.widget-id { 
+  font-size: 0.75rem; 
+  font-weight: 800; 
+  color: #444; 
+  letter-spacing: 2px; 
+}
+
+.status-dot {
+  width: 8px; 
+  height: 8px; 
+  border-radius: 50%;
+}
+
+.widget-number {
+  font-size: 4rem;
   font-weight: 800;
-  margin-bottom: 5px;
-  /* Numbers par premium look */
-  letter-spacing: -1px;
+  color: #ffffff;
+  letter-spacing: -4px;
+  margin: 0;
+  line-height: 1;
 }
 
-.slide h4 {
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-  opacity: 0.8;
+.widget-label {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 15px 0 5px;
 }
 
-/* --- Responsive Fix --- */
-@media (max-width: 1024px) {
-  .head6 {
-    flex-wrap: wrap;
-    gap: 30px;
-  }
-  .slide {
-    min-width: calc(50% - 20px); /* 2x2 grid on tablet */
+.widget-sub { 
+  font-size: 0.9rem; 
+  color: #666; 
+  font-weight: 500;
+}
+
+/* Progress Line at the bottom of card */
+.progress-track {
+  width: 100%; 
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill { 
+  height: 100%; 
+  width: 0; 
+}
+
+/* Sibling Blur Effect */
+.hub-grid:hover .hub-widget:not(:hover) {
+  opacity: 0.4;
+  filter: blur(2px);
+  transform: scale(0.98);
+}
+
+/* Responsive Fixes */
+@media (max-width: 1100px) {
+  .hub-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards on tablets */
   }
 }
 
-@media (max-width: 600px) {
-  .head6 {
-    padding: 20px;
+@media (max-width: 768px) {
+  .data-hub-section { padding: 60px 5%; }
+  .hub-grid {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 20px;
   }
-  .slide {
-    min-width: 100%; /* Full width on mobile */
-  }
-  .slide h3 {
-    font-size: 2rem;
+  .widget-number { font-size: 3.2rem; }
+  .hub-widget { padding: 35px; }
+  
+  /* Disable sibling blur on mobile for performance */
+  .hub-grid:hover .hub-widget:not(:hover) {
+    opacity: 1;
+    filter: none;
+    transform: none;
   }
 }

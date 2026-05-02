@@ -1,187 +1,134 @@
-/* --- Slider Section (Strictly Your Original Colors) --- */
-.head5 {
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+
+.elite-engine-section {
+  background: #050505;
+  min-height: 100vh;
+  width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 80px 7%;
-  gap: 40px;
+  overflow: hidden;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.grid-master-layout {
+  display: grid;
+  /* Card ko 400px fix kiya, baqi 1fr Swiper ko diya aur darmyan mein 150px ka GAP force kiya */
+  grid-template-columns: 450px 1fr; 
+  column-gap: 150px; 
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 80px;
+  align-items: center;
+}
+
+/* --- Content Side --- */
+.content-lock-zone {
   position: relative;
   z-index: 10;
 }
 
-/* Text Content Box */
-.text-content {
-  width: 450px;
-  height: 350px;
-  background: rgba(0, 0, 0, 0.3); 
-  border-radius: 14px;
-  padding: 35px;
-  box-shadow: 0 0 40px #2d2d83; 
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease-out;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.dev-glass-card {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px);
+  padding: 55px;
+  border-radius: 45px;
+  box-shadow: 0 50px 100px rgba(0,0,0,0.5);
 }
 
-.text-content h2 {
-  font-size: 2.2rem;
-  background: linear-gradient(to right, white, rgb(39, 29, 82));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
+.dev-tag {
+  color: #3b82f6;
   font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  margin-bottom: 25px;
+  text-transform: uppercase;
 }
 
-.text-content p {
-  color: rgb(215, 215, 215);
-  line-height: 1.6;
-  font-size: 0.95rem;
-  margin-bottom: 30px;
+.dev-glass-card h1 {
+  font-size: 3.5rem;
+  line-height: 1;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 20px;
 }
 
-.text-content button {
-  padding: 12px 28px;
-  width: fit-content;
+.dev-glass-card h1 span {
+  color: transparent;
+  -webkit-text-stroke: 1px #3b82f6;
+}
+
+.tech-pills { display: flex; gap: 10px; margin-bottom: 40px; }
+.tech-pills span {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  padding: 6px 15px;
   border-radius: 8px;
-  color: #e5e7eb;
-  border: 1px solid white;
-  background: transparent;
-  cursor: pointer;
-  transition: 0.5s all ease-in-out;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.text-content button:hover {
-  background: linear-gradient(to left, rgb(19, 19, 19), rgb(39, 29, 82));
-  box-shadow: 0 0 20px #2d2d83;
-  border-color: transparent;
-}
-
-/* --- Swiper Styling --- */
-.mySwiper {
-  width: 60%;
-  padding: 30px 0 !important;
-}
-
-.card-item {
+.primary-dev-btn {
   width: 100%;
-  height: 400px;
-  border-radius: 15px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 18px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.primary-dev-btn:hover { background: #3b82f6; color: #fff; }
+
+/* --- Swiper Side --- */
+.swiper-lock-zone {
+  min-width: 0;
+  position: relative;
+  /* Swiper ko thoda mazeed right push karne ke liye */
+  padding-left: 50px; 
+}
+
+.locked-swiper {
+  width: 100%;
+  padding: 100px 0 !important;
+  overflow: visible !important;
+}
+
+.locked-slide {
+  width: 350px !important;
+  height: 500px;
+  opacity: 0.2;
+  transition: 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.swiper-slide-active {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+.inner-visual-card {
+  height: 100%;
+  background: #0d0d0d;
+  border-radius: 35px;
+  border: 1px solid rgba(255,255,255,0.05);
   overflow: hidden;
   position: relative;
-  cursor: pointer;
-  background: #000;
 }
 
-.card-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: 0.8s all cubic-bezier(0.4, 0, 0.2, 1);
-  opacity: 0.7;
-}
+.img-wrap { height: 320px; overflow: hidden; }
+.img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: 1s ease; }
+.locked-slide:hover img { transform: scale(1.1); }
 
-.card-item::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(39, 29, 82, 0.9) 0%, transparent 60%);
-  z-index: 1;
-  transition: 0.5s ease;
-}
+.info-wrap { padding: 30px; }
+.slide-num { color: #3b82f6; font-weight: 800; font-size: 0.8rem; }
+.info-wrap h3 { font-size: 1.6rem; color: #fff; margin: 10px 0; }
+.hover-line { width: 0; height: 2px; background: #3b82f6; transition: 0.5s; }
+.locked-slide:hover .hover-line { width: 100%; }
 
-/* Info Container */
-.card-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 30px;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* Desktop default alignment */
-}
-
-.card-info h3 {
-  color: white;
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-  transform: translateY(120px); 
-  transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.card-info p {
-  color: #e0e0e0;
-  font-size: 0.85rem;
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(100px);
-  transition: 0.5s all ease;
-  transition-delay: 0.1s;
-}
-
-.card-info button {
-  width: fit-content;
-  padding: 8px 18px;
-  border-radius: 6px;
-  color: white;
-  border: 1px solid white;
-  background: transparent;
-  opacity: 0;
-  transform: translateY(80px);
-  transition: 0.5s all ease;
-  transition-delay: 0.2s;
-  cursor: pointer;
-}
-
-/* --- Hover State Animations --- */
-.card-item:hover img {
-  transform: scale(1.1);
-  opacity: 0.5;
-}
-
-.card-item:hover h3 { transform: translateY(0); }
-.card-item:hover p, .card-item:hover button { opacity: 1; transform: translateY(0); }
-
-/* --- Responsive Fix (768px Update) --- */
-@media (max-width: 768px) {
-  .head5 { 
-    flex-direction: column; 
-    text-align: center; 
-    padding: 50px 5%;
-  }
-  
-  .text-content { 
-    width: 100%; 
-    height: auto; 
-    padding: 40px 20px; 
-    align-items: center; /* Heading/Text center */
-  }
-
-  .text-content button { 
-    align-self: center; /* Outer button center */
-  }
-
-  .mySwiper { 
-    width: 100%; 
-  }
-
-  /* Slider Card Content Centering */
-  .card-info {
-    align-items: center; /* Card ke andar sab center */
-    text-align: center;
-    padding: 20px;
-    left: 0;
-  }
-
-  .card-info button {
-    align-self: center; /* Slider ka button center */
-  }
-}
-
-@media (max-width: 480px) {
-  .card-item { height: 350px; }
-  .text-content h2 { font-size: 1.8rem; }
+/* Mobile */
+@media (max-width: 1100px) {
+  .grid-master-layout { grid-template-columns: 1fr; row-gap: 50px; padding: 0 20px; }
+  .swiper-lock-zone { padding-left: 0; }
 }

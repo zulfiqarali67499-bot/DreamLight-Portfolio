@@ -1,108 +1,140 @@
-import React, { useState } from 'react';
-import { motion, useScroll } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, useScroll, useSpring, AnimatePresence, useMotionValue } from 'framer-motion';
 import './Footer.css'; 
 
 const UltraFooter = () => {
-  const [isHovered, setIsHovered] = useState(null);
+  const [showScroll, setShowScroll] = useState(false);
+  const [greeting, setGreeting] = useState("Hello");
   const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 60, damping: 20 });
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    const hours = new Date().getHours();
+    if (hours < 12) setGreeting("Good Morning");
+    else if (hours < 18) setGreeting("Good Afternoon");
+    else setGreeting("Good Evening");
+
+    const handleScroll = () => setShowScroll(window.scrollY > 400);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left - rect.width / 2) * 0.4);
+    mouseY.set((e.clientY - rect.top - rect.height / 2) * 0.4);
   };
-
-  const navLinks = [
-    { name: 'Github', url: '#' },
-    { name: 'LinkedIn', url: '#' },
-    { name: 'Twitter', url: '#' },
-    { name: 'Instagram', url: '#' }
-  ];
 
   return (
     <footer className="footer-container">
-      <div className="footer-glow" />
+      <div className="noise-overlay" />
+      <div className="footer-mesh" />
+      
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <filter id="liquid-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+          <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="liquid" />
+        </filter>
+      </svg>
 
-      <div className="footer-main">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="footer-grid"
-        >
-          {/* Brand Section */}
-          <div className="brand-section">
-            <motion.h2 
-              whileHover={{ letterSpacing: "5px" }}
-              className="footer-logo"
-            >
-              DREAMLIGHT
-            </motion.h2>
-            <p className="footer-tagline">
-              Architecting seamless Full Stack solutions with a touch of modern design.
-            </p>
+      <div className="footer-content">
+        <div className="footer-top-row">
+          <div className="brand-box">
+            <span className="time-greet">{greeting}, you're visiting</span>
+            <h2 className="footer-logo">DREAMLIGHT<span>.</span></h2>
+            <div className="founder-tag">
+               <span className="by">by</span> <span className="name">Ali Shair</span>
+            </div>
+            <p className="footer-tagline">Crafting premium digital interfaces with high-end animations and cinematic interactions.</p>
           </div>
 
-          {/* Social Links */}
-          <div className="footer-links">
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={index}
-                href={link.url}
-                target="_blank"
-                onMouseEnter={() => setIsHovered(index)}
-                onMouseLeave={() => setIsHovered(null)}
-                whileHover={{ y: -5 }}
-                className="f-link"
-                style={{
-                  color: isHovered === index ? 'white' : '#8892b0',
-                  textShadow: isHovered === index ? '0 0 15px #2d2d83' : 'none'
-                }}
-              >
-                {link.name}
-                {isHovered === index && (
-                  <motion.div layoutId="underline" className="f-underline" />
-                )}
-              </motion.a>
-            ))}
+          <div className="cta-box">
+            <p>Ready to level up?</p>
+            <a href="mailto:contact@dreamlight.com" className="email-link">Start a Project</a>
           </div>
-        </motion.div>
+        </div>
 
-        <div className="footer-bottom">
-          <p>© 2026 DESIGNED BY ALI SHAIR</p>
-          <div className="f-status">
-            <motion.span 
-              animate={{ opacity: [0.4, 1, 0.4] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="f-dot"
-            ></motion.span> 
-            Available for Freelance
+        <div className="footer-middle-row">
+          <div className="nav-group">
+            <span className="group-label">Expertise</span>
+            <div className="links-grid">
+              <span className="nav-item">Full Stack Dev</span>
+              <span className="nav-item">UI/UX Design</span>
+              <span className="nav-item">Motion Graphics</span>
+            </div>
+          </div>
+
+          <div className="nav-group">
+            <span className="group-label">Connect</span>
+            <div className="links-grid">
+              {['LinkedIn', 'Github', 'Instagram', 'Twitter'].map(item => (
+                <a key={item} href="#" className="nav-item">{item}</a>
+              ))}
+            </div>
+          </div>
+
+          <div className="status-group">
+            <div className="f-status-pill">
+              <motion.span 
+                animate={{ scale: [1, 1.4, 1], opacity: [0.5, 1, 0.5] }}
+                transition={{ repeat: Infinity, duration: 2 }}
+                className="f-dot"
+              />
+              <span className="status-text">Taking Commissions 2026</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="footer-bottom-row">
+          <div className="legal">
+             <span className="bold-white">DREAMLIGHT PORTFOLIO</span>
+             <span className="separator">|</span>
+             <span>© 2026</span>
+          </div>
+          <div className="local-time">
+            Sialkot, PK — {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>
       </div>
 
-      {/* Floating Scroll Button */}
-      <motion.div 
-        className="scroll-btn"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
-        onClick={scrollToTop}
-      >
-        <svg width="50" height="50" viewBox="0 0 60 60">
-          <motion.circle
-            cx="30" cy="30" r="28"
-            stroke="#2d2d83"
-            strokeWidth="3"
-            fill="transparent"
-            style={{ 
-              pathLength: scrollYProgress, 
-              rotate: -90, 
-              originX: "50%", 
-              originY: "50%" 
-            }}
-          />
-          <path d="M22 34L30 26L38 34" stroke="white" strokeWidth="2" fill="none" />
-        </svg>
-      </motion.div>
+      <AnimatePresence>
+        {showScroll && (
+          <motion.div 
+            className="magnetic-area"
+            onMouseMove={handleMouseMove}
+            onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
+          >
+            <motion.div 
+              className="scroll-btn-elite"
+              style={{ x: mouseX, y: mouseY }}
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            >
+              <div className="liquid-wrap">
+                <svg width="68" height="68" className="progress-svg">
+                  <circle cx="34" cy="34" r="31" className="circle-bg" strokeWidth="2" />
+                  <motion.circle
+                    cx="34" cy="34" r="31"
+                    className="progress-bar"
+                    strokeWidth="3"
+                    style={{ pathLength: smoothProgress }}
+                  />
+                </svg>
+              </div>
+              <div className="arrow-icon-circle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   );
 };

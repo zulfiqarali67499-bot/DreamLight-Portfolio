@@ -1,84 +1,87 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useLocation } from 'react-router-dom';
 import './UniversalCTA.css';
 
 const UniversalCTA = () => {
-  // Container animation logic
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2, // Har element ke darmiyan gap
-        delayChildren: 0.3,
-      },
-    },
+  const location = useLocation();
+  const containerRef = useRef(null);
+
+  // Mouse Tracking for 3D Tilt & Spotlight
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const handleMouseMove = ({ currentTarget, clientX, clientY }) => {
+    const { left, top } = currentTarget.getBoundingClientRect();
+    mouseX.set(clientX - left);
+    mouseY.set(clientY - top);
   };
 
-  // Elements animation logic
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30, filter: "blur(10px)" },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      filter: "blur(0px)",
-      transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
-    }
+  const getPageName = () => {
+    const path = location.pathname === '/' ? 'Home' : location.pathname.split('/')[1];
+    return path.charAt(0).toUpperCase() + path.slice(1);
   };
 
   return (
-    <div className="universal-cta-container">
-      {/* Dynamic Background Blurs */}
+    <section 
+      className="elite-cta-section" 
+      onMouseMove={handleMouseMove}
+      ref={containerRef}
+    >
+      {/* Interactive Spotlight Layer */}
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15 }}
-        transition={{ duration: 2 }}
-        className="cta-glow-element top-left"
-      ></motion.div>
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.15 }}
-        transition={{ duration: 2, delay: 0.5 }}
-        className="cta-glow-element bottom-right"
-      ></motion.div>
+        className="spotlight-overlay"
+        style={{
+          background: useTransform(
+            [mouseX, mouseY],
+            ([x, y]) => `radial-gradient(600px circle at ${x}px ${y}px, rgba(168, 85, 247, 0.15), transparent 80%)`
+          )
+        }}
+      />
 
       <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible" // Scroll animation trigger
-        viewport={{ once: true, amount: 0.3 }} // 30% section nazar aane par start hoga
-        className="cta-content-box"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+        className="elite-content-wrapper"
       >
-        <motion.span variants={itemVariants} className="cta-subtitle">
-          Available for new opportunities
-        </motion.span>
-        
-        <motion.h2 variants={itemVariants} className="cta-heading">
-          Let’s build something <span className="gradient-text">extraordinary</span> together.
-        </motion.h2>
-        
-        <motion.p variants={itemVariants} className="cta-description">
-          Whether you have a fully-fledged idea or a small spark of inspiration, 
-          let’s turn it into a high-performance digital reality.
-        </motion.p>
+        {/* Modern Location Tag */}
+        <div className="elite-badge">
+          <span className="live-status"></span>
+          <p>Currently on /{getPageName()}</p>
+        </div>
 
-        <motion.div variants={itemVariants} className="cta-button-wrapper">
+        <h2 className="elite-heading">
+          Elevate your <span className="text-shimmer">{getPageName()}</span> <br /> 
+          into a <span className="gradient-highlight">Digital Masterpiece.</span>
+        </h2>
+
+        <p className="elite-lead">
+          We don’t just build websites; we architect high-performance digital 
+          assets that demand attention and drive results.
+        </p>
+
+        <div className="elite-action-group">
           <motion.button 
-            whileHover={{ 
-              scale: 1.05, 
-              boxShadow: '0 0 40px rgba(0, 223, 216, 0.3)',
-              backgroundColor: '#f0f0f0' 
-            }}
-            whileTap={{ scale: 0.95 }}
-            className="cta-main-btn"
-            onClick={() => window.location.href = 'mailto:ali@example.com'}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="prime-btn"
+            onClick={() => window.location.href = 'mailto:your-email@example.com'}
           >
-            Start a Conversation
-            <span className="btn-arrow">→</span>
+            <span>Secure a Consultation</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
           </motion.button>
-        </motion.div>
+          
+          <p className="availability-note">Limited availability for Q3 2026</p>
+        </div>
       </motion.div>
-    </div>
+
+      {/* Background Architectural Elements */}
+      <div className="grid-overlay"></div>
+    </section>
   );
 };
 
